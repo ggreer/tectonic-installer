@@ -1,5 +1,5 @@
-hash: ec830afeeb6935f39288c7e9f2d6adcf691df1fd0173d6161a41d48a4192bedc
-updated: 2018-05-16T14:21:21.291519+02:00
+hash: 68d6ad24c80a1bd6394803f840163d9140f83169caa6f7a032efba1e7a458781
+updated: 2018-06-05T11:40:11.624073422-07:00
 imports:
 - name: github.com/ajeddeloh/go-json
   version: 73d058cf8437a1989030afe571eeab9f90eebbbd
@@ -8,9 +8,9 @@ imports:
   subpackages:
   - parse
 - name: github.com/alecthomas/units
-  version: 2efee857e7cfd4f3d0138cc3cbb1b4966962b93a
+  version: 6b4e7dc5e3143b85ea77909c72caf89416fc2915
 - name: github.com/apparentlymart/go-cidr
-  version: 2bd8b58cf4275aeb086ade613de226773e29e853
+  version: a3ebdb999b831ecb6ab8a226e31b07b2b9061c47
   subpackages:
   - cidr
 - name: github.com/coreos/go-semver
@@ -37,7 +37,7 @@ imports:
   - config/validate/astnode
   - config/validate/report
 - name: github.com/coreos/tectonic-config
-  version: 22c2fde25b6bd804166bb9dea5e62c16ef2e4900
+  version: 3981d02b2affc9c9a3c190111596718e46efa19b
   subpackages:
   - config/kube-addon
   - config/kube-core
@@ -103,7 +103,7 @@ imports:
   - lex/httplex
   - websocket
 - name: golang.org/x/sys
-  version: 7c87d13f8e835d2fb3a70a2912c811ed0c1d241b
+  version: 833a04a10549a95dc34458c195cbad61bbb6cb4d
   subpackages:
   - unix
 - name: golang.org/x/text
