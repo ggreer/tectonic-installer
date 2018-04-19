@@ -16,7 +16,6 @@ import (
 	tnco "github.com/coreos/tectonic-config/config/tectonic-node-controller"
 	"github.com/coreos/tectonic-config/config/tectonic-utility"
 	"github.com/ghodss/yaml"
-	"golang.org/x/crypto/bcrypt"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/coreos/tectonic-installer/installer/pkg/config"
@@ -214,47 +213,12 @@ func (c *ConfigGenerator) utilityConfig() (*tectonicutility.OperatorConfig, erro
 		},
 	}
 
-	var err error
-	bytes, err := bcrypt.GenerateFromPassword([]byte(c.Admin.Password), 12)
-	if err != nil {
-		return nil, err
-	}
-	hashedAdminPassword := string(bytes)
-	adminUserID, err := generateRandomID(16)
-	if err != nil {
-		return nil, err
-	}
-	consoleSecret, err := generateRandomID(16)
-	if err != nil {
-		return nil, err
-	}
-	KubectlSecret, err := generateRandomID(16)
-	if err != nil {
-		return nil, err
-	}
-
-	if err != nil {
-		return nil, err
-	}
-	utilityConfig.IdentityConfig.AdminEmail = c.Admin.Email
-	utilityConfig.IdentityConfig.AdminPasswordHash = hashedAdminPassword
-	utilityConfig.IdentityConfig.AdminUserID = adminUserID
-	utilityConfig.IdentityConfig.ConsoleClientID = identityConfigConsoleClientID
-	utilityConfig.IdentityConfig.ConsoleSecret = consoleSecret
-	utilityConfig.IdentityConfig.KubectlClientID = identityConfigKubectlClientID
-	utilityConfig.IdentityConfig.KubectlSecret = KubectlSecret
-
-	utilityConfig.IngressConfig.ConsoleBaseHost = c.getBaseAddress()
-	utilityConfig.IngressConfig.IngressKind = ingressConfigIngressKind
-
 	utilityConfig.StatsEmitterConfig.StatsURL = statsEmitterConfigStatsURL
 
-	utilityConfig.TectonicConfigMapConfig.BaseAddress = c.getBaseAddress()
 	utilityConfig.TectonicConfigMapConfig.CertificatesStrategy = certificatesStrategy
 	utilityConfig.TectonicConfigMapConfig.ClusterID = c.Cluster.Internal.ClusterID
 	utilityConfig.TectonicConfigMapConfig.ClusterName = c.Cluster.Name
-	utilityConfig.TectonicConfigMapConfig.IdentityAPIService = identityAPIService
-	utilityConfig.TectonicConfigMapConfig.InstallerPlatform = c.Platform.String()
+	utilityConfig.TectonicConfigMapConfig.InstallerPlatform = c.Cluster.Platform.String()
 	utilityConfig.TectonicConfigMapConfig.KubeAPIServerURL = c.getAPIServerURL()
 	// TODO: Speficy what's a version in ut2 and set it here
 	utilityConfig.TectonicConfigMapConfig.TectonicVersion = "ut2"
