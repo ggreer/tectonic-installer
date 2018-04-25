@@ -10,6 +10,7 @@ tectonic-license.txt
 terraform.tfstate*
 terraform.tfvars
 bin/
+clusters/
 bin_test/
 matchbox/
 /contrib/govcloud/vpn.conf
