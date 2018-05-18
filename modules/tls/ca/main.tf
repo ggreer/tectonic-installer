@@ -1,13 +1,15 @@
 # Root CA (resources/generated/tls/{root-ca.crt})
 locals {
-  _root_ca_cert_pem_path       = "${var.root_ca_cert_pem_path == "" ? "/dev/null" : var.root_ca_cert_pem_path}"
-  _root_ca_key_pem_path        = "${var.root_ca_key_pem_path == "" ? "/dev/null" : var.root_ca_key_pem_path}"
-  _etcd_ca_cert_pem_path       = "${var.etcd_ca_cert_pem_path == "" ? "/dev/null" : var.etcd_ca_cert_pem_path}"
-  _etcd_ca_key_pem_path        = "${var.etcd_ca_key_pem_path == "" ? "/dev/null" : var.etcd_ca_key_pem_path}"
-  _kube_ca_cert_pem_path       = "${var.kube_ca_cert_pem_path == "" ? "/dev/null" : var.kube_ca_cert_pem_path}"
-  _kube_ca_key_pem_path        = "${var.kube_ca_key_pem_path == "" ? "/dev/null" : var.kube_ca_key_pem_path}"
-  _aggregator_ca_cert_pem_path = "${var.aggregator_ca_cert_pem_path == "" ? "/dev/null" : var.aggregator_ca_cert_pem_path}"
-  _aggregator_ca_key_pem_path  = "${var.aggregator_ca_key_pem_path == "" ? "/dev/null" : var.aggregator_ca_key_pem_path}"
+  _root_ca_cert_pem_path            = "${var.root_ca_cert_pem_path == "" ? "/dev/null" : var.root_ca_cert_pem_path}"
+  _root_ca_key_pem_path             = "${var.root_ca_key_pem_path == "" ? "/dev/null" : var.root_ca_key_pem_path}"
+  _etcd_ca_cert_pem_path            = "${var.etcd_ca_cert_pem_path == "" ? "/dev/null" : var.etcd_ca_cert_pem_path}"
+  _etcd_ca_key_pem_path             = "${var.etcd_ca_key_pem_path == "" ? "/dev/null" : var.etcd_ca_key_pem_path}"
+  _kube_ca_cert_pem_path            = "${var.kube_ca_cert_pem_path == "" ? "/dev/null" : var.kube_ca_cert_pem_path}"
+  _kube_ca_key_pem_path             = "${var.kube_ca_key_pem_path == "" ? "/dev/null" : var.kube_ca_key_pem_path}"
+  _aggregator_ca_cert_pem_path      = "${var.aggregator_ca_cert_pem_path == "" ? "/dev/null" : var.aggregator_ca_cert_pem_path}"
+  _aggregator_ca_key_pem_path       = "${var.aggregator_ca_key_pem_path == "" ? "/dev/null" : var.aggregator_ca_key_pem_path}"
+  _service_serving_ca_cert_pem_path = "${var.service_serving_ca_cert_pem_path == "" ? "/dev/null" : var.service_serving_ca_cert_pem_path}"
+  _service_serving_ca_key_pem_path  = "${var.service_serving_ca_key_pem_path == "" ? "/dev/null" : var.service_serving_ca_key_pem_path}"
 }
 
 resource "tls_private_key" "root_ca" {
@@ -202,9 +204,9 @@ resource "tls_cert_request" "service_serving_ca" {
 resource "tls_locally_signed_cert" "service_serving_ca" {
   cert_request_pem = "${tls_cert_request.service_serving_ca.cert_request_pem}"
 
-  ca_key_algorithm   = "${var.root_ca_cert_pem == "" ? join("", tls_self_signed_cert.root_ca.*.key_algorithm) : var.root_ca_key_alg}"
-  ca_private_key_pem = "${var.root_ca_cert_pem == "" ? join("", tls_private_key.root_ca.*.private_key_pem) : var.root_ca_key_pem}"
-  ca_cert_pem        = "${var.root_ca_cert_pem == "" ? join("", tls_self_signed_cert.root_ca.*.cert_pem) : var.root_ca_cert_pem}"
+  ca_key_algorithm   = "${var.root_ca_cert_pem_path == "" ? join("", tls_self_signed_cert.root_ca.*.key_algorithm) : var.root_ca_key_alg}"
+  ca_private_key_pem = "${var.root_ca_cert_pem_path == "" ? join("", tls_private_key.root_ca.*.private_key_pem) : var.root_ca_key_pem_path}"
+  ca_cert_pem        = "${var.root_ca_cert_pem_path == "" ? join("", tls_self_signed_cert.root_ca.*.cert_pem) : var.root_ca_cert_pem_path}"
   is_ca_certificate  = true
 
   # intermediate certs are valid for 3 years.
