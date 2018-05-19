@@ -68,13 +68,7 @@ module "tectonic" {
   ingress_ca_cert_pem = "${local.ingress_ca_cert_pem}"
   ingress_cert_pem    = "${local.ingress_cert_pem}"
   ingress_key_pem     = "${local.ingress_key_pem}"
-
-  identity_client_ca_cert  = "${local.identity_client_ca_cert}"
-  identity_client_cert_pem = "${local.identity_client_cert_pem}"
-  identity_client_key_pem  = "${local.identity_client_key_pem}"
-  identity_server_ca_cert  = "${local.identity_server_ca_cert}"
-  identity_server_cert_pem = "${local.identity_server_cert_pem}"
-  identity_server_key_pem  = "${local.identity_server_key_pem}"
+  ingress_bundle_pem  = "${join("", list(local.ingress_cert_pem, local.ingress_key_pem, local.ingress_ca_cert_pem))}"
 
   platform     = "${var.tectonic_platform}"
   ingress_kind = "${var.ingress_kind}"
