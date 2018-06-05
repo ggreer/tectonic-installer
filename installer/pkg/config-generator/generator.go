@@ -121,7 +121,7 @@ func (c *ConfigGenerator) addonConfig() (*kubeaddon.OperatorConfig, error) {
 			Kind:       kubeaddon.Kind,
 		},
 	}
-	addonConfig.CloudProvider = c.Platform
+	addonConfig.CloudProvider = c.Cluster.Platform.String()
 	addonConfig.ClusterConfig.APIServerURL = c.getAPIServerURL()
 	registrySecret, err := generateRandomID(16)
 	if err != nil {
